@@ -6,7 +6,8 @@ class Game {
     }
 
     itterate() {
-        this.generation ++;
+        this.generation = this.generation + 1;
+        console.log("itt")
     }
 }
 
