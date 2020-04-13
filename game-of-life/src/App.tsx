@@ -1,23 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+import CellComponent from "./components/cell";
+import SetupComponent from "./components/setup";
+import Board from "./components/board";
+
+import Game from "./classes/Game";
+import Cell from './classes/Cell';
+
+
+const game = new Game();
+const testCell = new Cell(0, 0, true);
+
+const App = () => {
+  const [generation, setGeneration] = useState(game.generation);
+  const [boardSize, setBoardSize] = useState(20);
+
+  const gameItt = () => {
+    game.itterate();
+    setGeneration(game.generation);
+  }
+
+  const setBoard = (inputBoardSize: number) => {
+    setBoardSize(inputBoardSize);
+    for (let column = 0; column < inputBoardSize; column++) {
+        for (let row = 0; row < inputBoardSize; row++) {
+            game.populate(new Cell(column, row, true));
+        }
+    }
+
+    //TODO find neighbours
+  }
+
+  
+
   return (
     <div className="App">
+      <SetupComponent setSize={setBoard}/>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+          <CellComponent cell={testCell}/>
+          <Board cells={game.cells} />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          {generation}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <p>
+          {boardSize}
+        </p>
+        <button
+          onClick={gameItt}
         >
-          Learn React
-        </a>
+          Itterate
+        </button>
       </header>
     </div>
   );
