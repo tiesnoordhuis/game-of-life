@@ -27,6 +27,7 @@ const cellStyle: React.CSSProperties = {
     height: 40,
     width: 40,
     display: "inline-block",
+    whiteSpace: "nowrap",
     border: "solid",
     userSelect:"none"
 };

@@ -22,7 +22,7 @@ const Board = ({ cells, itteration }: BoardProps) => {
 
     let rowDisplay: JSX.Element[] = [];
     cellDisplay.forEach((row, index) => {
-        rowDisplay.push((<div key={index}>{row}</div>))
+        rowDisplay.push((<div key={index} style={rowStyle}>{row}</div>))
     })
 
 
@@ -32,5 +32,12 @@ const Board = ({ cells, itteration }: BoardProps) => {
         </span>
     )
 }
+
+const rowStyle: React.CSSProperties = {
+    display: "inline-block",
+    whiteSpace: "nowrap",
+    overflowX: "visible",
+    userSelect:"none"
+};
 
 export default Board
