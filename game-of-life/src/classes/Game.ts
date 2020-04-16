@@ -1,13 +1,21 @@
-import RuleSet from "./RuleSet";
 import Cell from "./Cell";
 
 class Game {
     public generation: number;
-    private ruleSet: RuleSet = new RuleSet();
     public cells: Cell[] = [];
 
     constructor() {
         this.generation = 0;
+    }
+
+    public complexity(): number {
+        let alives: number = 0;
+        this.cells.forEach(cell => {
+            if (cell.alive) {
+                alives ++;
+            }
+        })
+        return alives;
     }
 
     public populateGame(boardSize: number) {
