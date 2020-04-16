@@ -2,10 +2,10 @@ import Cell from "./Cell";
 
 class RuleSet {
     survive(cell: Cell): boolean {
-        if (cell.alive && cell.neighbours.length === 2) {
+        if (cell.alive && cell.aliveNeighbours === 2) {
             return true;
         }
-        if (cell.neighbours.length === 3) {
+        if (cell.aliveNeighbours === 3) {
             return true;
         }
         return false;

@@ -10,12 +10,30 @@ class Game {
         this.generation = 0;
     }
 
-    public populate(cell: Cell): void {
+    public populateGame(boardSize: number) {
+        for (let column = 0; column < boardSize; column++) {
+            for (let row = 0; row < boardSize; row++) {
+                this._populate(new Cell(column, row, false));
+            }
+        }
+        
+        this._findAllNeighbours();
+    }
+
+    private _populate(cell: Cell): void {
         this.cells.push(cell);
     }
 
-    public start(): void {
-        this.setAllNeighbours();
+    private _findAllNeighbours(): void {
+        this.cells.forEach((currentCell, cellIndex, cells) => {
+            for (let checkIndex = 0; checkIndex < cells.length; checkIndex++) {
+                const checkCell = cells[checkIndex];
+                if (currentCell.neighbours.length > 7) {
+                    break
+                }
+                currentCell.addIfNeighbour(checkCell);
+            }            
+        })
     }
 
     public itterate(): void {
@@ -25,21 +43,10 @@ class Game {
 
     private setAllSurvive(): void {
         this.cells.forEach(cell => {
-            cell.alive = this.ruleSet.survive(cell);
+            cell.survive();
         })
-    }
-
-    private setAllNeighbours(): void {
         this.cells.forEach(cell => {
-            this.setNeighbours(cell);
-        })
-    }
-
-    private setNeighbours(currentCell: Cell): void {
-        this.cells.forEach(otherCell => {
-            if (this.ruleSet.isNeighbour(currentCell, otherCell)) {
-                currentCell.addNeighbour(otherCell);
-            }
+            cell.die();
         })
     }
 }
